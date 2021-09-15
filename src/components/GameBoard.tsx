@@ -21,6 +21,7 @@ const GameBoard: FunctionComponent<PropsFromRedux> = ({ board, markCell }) => {
 const connector = connect(
   (state: ApplicationState) => ({
     board: state.game.board,
+    player: state.game.activePlayer,
   }),
   gameModule.actionCreators,
 )

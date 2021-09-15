@@ -1,12 +1,19 @@
 import { Action, Reducer } from 'redux'
 import { AppThunkAction } from '../'
 
-export interface State {
-  board: string[]
+const playerMarkMap = {
+  1: 'X',
+  2: 'O',
 }
 
-const unloadedState = {
-  board: ['', '', '', '', '', '', '', '', '']
+export interface State {
+  board: string[]
+  activePlayer: 1 | 2
+}
+
+const unloadedState: State = {
+  board: ['', '', '', '', '', '', '', '', ''],
+  activePlayer: 1,
 }
 
 interface ActionResetGame {
@@ -18,7 +25,12 @@ interface ActionMarkCell {
   cellIndex: number,
 }
 
-type KnownActions = ActionResetGame | ActionMarkCell
+interface ActionSetPlayer {
+  type: 'SET_PLAYER',
+  player: 1 | 2,
+}
+
+type KnownActions = ActionResetGame | ActionMarkCell | ActionSetPlayer
 
 export const actionCreators = {
   resetGame: (): AppThunkAction<KnownActions> => (dispatch, getState): void => {
@@ -26,6 +38,18 @@ export const actionCreators = {
   },
   markCell: (cellIndex: number): AppThunkAction<KnownActions> => (dispatch, getState): void => {
     dispatch({ type: 'MARK_CELL', cellIndex })
+
+    const togglePlayerMap: {
+      [key: number]: 1 | 2,
+    } = {
+      1: 2,
+      2: 1,
+    }
+
+    dispatch({
+      type: 'SET_PLAYER',
+      player: togglePlayerMap[getState().game.activePlayer]
+    })
   },
 }
 
@@ -44,8 +68,13 @@ export const reducer: Reducer<State> = (
         ...state,
         board: state.board.map((cell, index) => {
           if (index !== action.cellIndex) return cell
-          return 'O'
+          return playerMarkMap[state.activePlayer]
         })
+      }
+    case 'SET_PLAYER':
+      return {
+        ...state,
+        activePlayer: action.player,
       }
   }
 
