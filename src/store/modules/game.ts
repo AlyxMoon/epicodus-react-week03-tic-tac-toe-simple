@@ -37,6 +37,9 @@ export const actionCreators = {
     dispatch({ type: 'RESET_GAME' })
   },
   markCell: (cellIndex: number): AppThunkAction<KnownActions> => (dispatch, getState): void => {
+    const { board } = getState().game
+    if (board[cellIndex] !== '') return
+
     dispatch({ type: 'MARK_CELL', cellIndex })
 
     const togglePlayerMap: {
