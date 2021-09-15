@@ -16,11 +16,16 @@
     justify-content: center;
     align-items: center;
 
-    background-color: #DDD;
+    background-color: #EEE;
 
     font-family: 'Lucida Grande', sans-serif;
     font-size: 3rem;
 
     user-select: none;
+    
+    &.can-click:hover {
+      background-color: #DDD;
+      cursor: pointer;
+    }
   }
 }

@@ -1,13 +1,15 @@
 import { Action, Reducer } from 'redux'
 import { AppThunkAction } from '../'
 
-const playerMarkMap = {
+const playerMarkMap: {
+  [key: number]: 'X' | 'O'
+} = {
   1: 'X',
   2: 'O',
 }
 
 export interface State {
-  board: string[]
+  board: ('' | 'X' | 'O')[]
   activePlayer: 1 | 2
 }
 

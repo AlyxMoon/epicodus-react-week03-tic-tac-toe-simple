@@ -5,11 +5,15 @@ import { ApplicationState, gameModule } from '../store/index'
 import './GameBoard.scss'
 
 const GameBoard: FunctionComponent<PropsFromRedux> = ({ board, markCell }) => {
+  const generateCellClasses = (cell: string): string => {
+    return `cell ${cell === '' ? 'can-click' : ''}`
+  }
+
   return (
-    <div className="game-board">
+    <div className='game-board'>
       {board.map((cell, i) => (
         <div 
-          className="cell"
+          className={generateCellClasses(cell)}
           key={i}
           onClick={() => markCell(i)}
         >{cell}</div>
