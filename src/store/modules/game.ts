@@ -56,20 +56,36 @@ export const actionCreators = {
   resetGame: (): AppThunkAction<KnownActions> => (dispatch, getState): void => {
     dispatch({ type: 'RESET_GAME' })
   },
-  markCell: (cellIndex: number): AppThunkAction<KnownActions> => (dispatch, getState): void => { 
-    if (getState().game.board[cellIndex] !== '') return
+
+  markCell: (cellIndex: number): AppThunkAction<KnownActions> => (dispatch, getState): void => {
+    const currentState = getState().game
+    if (currentState.board[cellIndex] !== '') return
+    if (currentState.winner) return
 
     dispatch({ type: 'MARK_CELL', cellIndex })
 
     const winner = getWinnerOfBoard(getState().game.board)
-    console.log('have they won?!', winner)
 
-    // const winner = getWinnerOfBoard(getState().game.board)
+    if (winner === '') {
+      dispatch({
+        type: 'SET_PLAYER',
+        player: togglePlayerMap[getState().game.activePlayer]
+      })
+    }
 
-    dispatch({
-      type: 'SET_PLAYER',
-      player: togglePlayerMap[getState().game.activePlayer]
-    })
+    if (winner === 'X') {
+      dispatch({
+        type: 'SET_WINNER',
+        player: 1,
+      })
+    }
+
+    if (winner === 'O') {
+      dispatch({
+        type: 'SET_WINNER',
+        player: 2,
+      })
+    }
   },
 }
 
