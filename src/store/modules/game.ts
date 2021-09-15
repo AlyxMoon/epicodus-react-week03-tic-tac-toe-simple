@@ -1,5 +1,6 @@
 import { Action, Reducer } from 'redux'
 import { AppThunkAction } from '../'
+import getWinnerOfBoard from '../../lib/getWinnerOfBoard'
 
 const playerMarkMap: {
   [key: number]: 'X' | 'O'
@@ -8,14 +9,26 @@ const playerMarkMap: {
   2: 'O',
 }
 
+const togglePlayerMap: {
+  [key: number]: 1 | 2,
+} = {
+  1: 2,
+  2: 1,
+}
+
+export type PossibleCells = '' | 'X' | 'O'
+export type Board = PossibleCells[]
+
 export interface State {
-  board: ('' | 'X' | 'O')[]
-  activePlayer: 1 | 2
+  board: Board,
+  activePlayer: 1 | 2,
+  winner: 0 | 1 | 2,
 }
 
 const unloadedState: State = {
   board: ['', '', '', '', '', '', '', '', ''],
   activePlayer: 1,
+  winner: 0,
 }
 
 interface ActionResetGame {
@@ -32,24 +45,26 @@ interface ActionSetPlayer {
   player: 1 | 2,
 }
 
-type KnownActions = ActionResetGame | ActionMarkCell | ActionSetPlayer
+interface ActionSetWinner {
+  type: 'SET_WINNER',
+  player: 1 | 2,
+}
+
+type KnownActions = ActionResetGame | ActionMarkCell | ActionSetPlayer | ActionSetWinner
 
 export const actionCreators = {
   resetGame: (): AppThunkAction<KnownActions> => (dispatch, getState): void => {
     dispatch({ type: 'RESET_GAME' })
   },
-  markCell: (cellIndex: number): AppThunkAction<KnownActions> => (dispatch, getState): void => {
-    const { board } = getState().game
-    if (board[cellIndex] !== '') return
+  markCell: (cellIndex: number): AppThunkAction<KnownActions> => (dispatch, getState): void => { 
+    if (getState().game.board[cellIndex] !== '') return
 
     dispatch({ type: 'MARK_CELL', cellIndex })
 
-    const togglePlayerMap: {
-      [key: number]: 1 | 2,
-    } = {
-      1: 2,
-      2: 1,
-    }
+    const winner = getWinnerOfBoard(getState().game.board)
+    console.log('have they won?!', winner)
+
+    // const winner = getWinnerOfBoard(getState().game.board)
 
     dispatch({
       type: 'SET_PLAYER',
@@ -80,6 +95,11 @@ export const reducer: Reducer<State> = (
       return {
         ...state,
         activePlayer: action.player,
+      }
+    case 'SET_WINNER':
+      return {
+        ...state,
+        winner: action.player,
       }
   }
 

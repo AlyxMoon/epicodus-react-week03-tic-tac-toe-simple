@@ -4,10 +4,19 @@ import { ApplicationState } from './store/index'
 
 import GameBoard from './components/GameBoard'
 
-const App: FunctionComponent<PropsFromRedux> = () => {
+const App: FunctionComponent<PropsFromRedux> = ({ activePlayer }) => {
+  const getActivePlayerLetter = () => {
+    return activePlayer === 1 ? 'X' : 'O'
+  }
+
   return (
     <div className="app">
       <h1>Hello World</h1>
+
+      <dl>
+        <dt>Current Player:</dt>
+        <dd>{activePlayer} ({getActivePlayerLetter()})</dd>
+      </dl>
 
       <GameBoard />
     </div>
@@ -16,7 +25,7 @@ const App: FunctionComponent<PropsFromRedux> = () => {
 
 const connector = connect(
   (state: ApplicationState) => ({
-    game: state.game,
+    activePlayer: state.game.activePlayer,
   }),
 )
 
