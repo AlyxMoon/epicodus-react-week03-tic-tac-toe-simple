@@ -12,6 +12,13 @@
   border: 2px solid black;
   
   .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     background-color: #DDD;
+
+    font-family: 'Lucida Grande', sans-serif;
+    font-size: 3rem;
   }
 }
