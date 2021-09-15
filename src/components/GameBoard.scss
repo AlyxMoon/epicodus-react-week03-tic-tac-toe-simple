@@ -1,0 +1,17 @@
+
+.game-board {
+  --cell-size: 100px;
+  width: fit-content;
+
+  display: grid;
+  grid-template-columns: repeat(3, var(--cell-size));
+  grid-template-rows: repeat(3, var(--cell-size));
+  gap: 2px;
+
+  background-color: black;
+  border: 2px solid black;
+  
+  .cell {
+    background-color: #DDD;
+  }
+}
