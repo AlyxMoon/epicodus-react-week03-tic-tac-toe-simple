@@ -4,7 +4,7 @@ import { ApplicationState, gameModule } from './store/index'
 
 import GameBoard from './components/GameBoard'
 
-const App: FunctionComponent<PropsFromRedux> = ({ activePlayer, winner, restartGame }) => {
+const App: FunctionComponent<PropsFromRedux> = ({ activePlayer, winner, restartGame, hasDrawn }) => {
   const getActivePlayerLetter = () => {
     return activePlayer === 1 ? 'X' : 'O'
   }
@@ -26,6 +26,14 @@ const App: FunctionComponent<PropsFromRedux> = ({ activePlayer, winner, restartG
         </div>
       )}
 
+      {!hasDrawn ? '' : (
+        <div className="winner-indicator">
+          <h1>Nobody has won, sad!</h1>
+          
+          <button onClick={restartGame}>Restart Game</button>
+        </div>
+      )}
+
       <GameBoard />
     </div>
   )
@@ -35,6 +43,9 @@ const connector = connect(
   (state: ApplicationState) => ({
     activePlayer: state.game.activePlayer,
     winner: state.game.winner,
+    hasDrawn: !state.game.winner && state.game.board.every(cell => {
+      return cell !== ''
+    })
   }),
   {
     restartGame: gameModule.actionCreators.resetGame,
