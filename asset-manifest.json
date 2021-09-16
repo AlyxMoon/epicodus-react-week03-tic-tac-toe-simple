@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/epicodus-react-week03-tic-tac-toe-simple/static/css/main.a4819a9b.chunk.css",
-    "main.js": "/epicodus-react-week03-tic-tac-toe-simple/static/js/main.e7765c17.chunk.js",
-    "main.js.map": "/epicodus-react-week03-tic-tac-toe-simple/static/js/main.e7765c17.chunk.js.map",
+    "main.js": "/epicodus-react-week03-tic-tac-toe-simple/static/js/main.4f1f14f8.chunk.js",
+    "main.js.map": "/epicodus-react-week03-tic-tac-toe-simple/static/js/main.4f1f14f8.chunk.js.map",
     "runtime-main.js": "/epicodus-react-week03-tic-tac-toe-simple/static/js/runtime-main.878348be.js",
     "runtime-main.js.map": "/epicodus-react-week03-tic-tac-toe-simple/static/js/runtime-main.878348be.js.map",
     "static/js/2.2a066b46.chunk.js": "/epicodus-react-week03-tic-tac-toe-simple/static/js/2.2a066b46.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.878348be.js",
     "static/js/2.2a066b46.chunk.js",
     "static/css/main.a4819a9b.chunk.css",
-    "static/js/main.e7765c17.chunk.js"
+    "static/js/main.4f1f14f8.chunk.js"
   ]
 }
